@@ -1,0 +1,61 @@
+using System.Runtime.InteropServices;
+
+namespace CalculatorGreutatePeLuna
+{
+    public partial class CalculatorGreutatePeLuna : Form
+    {
+        public CalculatorGreutatePeLuna()
+        {
+            InitializeComponent();
+
+        }
+
+        private void CalculGreutateOmPeLuna_Click(object sender, EventArgs e)
+        {
+
+            var AfisareMesajEroare = labelAfisareMesajEroare.Text;
+            labelAfisareMesajEroare.ForeColor = System.Drawing.Color.Red;
+            labelAfisareMesajEroare.Text = "  ";
+            labelGreutateOmPeLuna.Text = " ";
+
+            const double gravitatieLuna = 0.17;
+
+            double validareDateUtilizator = ValidareDate();
+
+            if (validareDateUtilizator == -1)
+            {
+                labelAfisareMesajEroare.Text = " Date invalide. Greutatea este situata in intervalul 45 kg si 90 kg";
+                return;
+            }
+            float greutateOmPeLuna = (float)(ValidareDate() * gravitatieLuna);
+           
+            labelGreutateOmPeLuna.Text = $"Greutatea dv pe Luna este de {greutateOmPeLuna} kg";
+            return;          
+        }
+        private double ValidareDate()
+        {
+            double greutatePePamant = Convert.ToDouble(textBoxGreutatePePamant.Text);
+
+            try
+            {
+                if (greutatePePamant < 45 || greutatePePamant > 90)
+                {
+                    labelAfisareMesajEroare.Text = " Date invalide. Greutatea este situata in intervalul 45 kg si 90 kg";
+                  
+                }               
+            }
+            catch (FormatException)           
+            {
+                labelAfisareMesajEroare.Text = "Nu puteti introduce litere sau simboluri.";
+            }
+            return greutatePePamant;
+        }
+
+        private void btnIesireAplicatie_Click(object sender, EventArgs e)
+        {
+            var IesireAplicatie = this;
+
+            IesireAplicatie.Close();
+        }
+    }
+}
