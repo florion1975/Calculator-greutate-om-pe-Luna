@@ -12,26 +12,27 @@ namespace CalculatorGreutatePeLuna
 
         private void CalculGreutateOmPeLuna_Click(object sender, EventArgs e)
         {
-
-            var AfisareMesajEroare = labelAfisareMesajEroare.Text;
+            const double indiceGravitatie = 0.17;
             labelAfisareMesajEroare.ForeColor = System.Drawing.Color.Red;
             labelAfisareMesajEroare.Text = "  ";
-            labelGreutateOmPeLuna.Text = " ";
+            labelGreutatePeLuna.Text = "  ";
+            labelMesajEroareNecunoscuta.Text = "  ";
 
-            const double gravitatieLuna = 0.17;
-
-            double validareDateUtilizator = ValidareDate();
-
-            if (validareDateUtilizator == -1)
-            {
-                labelAfisareMesajEroare.Text = " Date invalide. Greutatea este situata in intervalul 45 kg si 90 kg";
-                return;
+            try
+            {        
+                if (ValidareDate() <= 0)
+                {                   
+                    return;
+                }
             }
-            float greutateOmPeLuna = (float)(ValidareDate() * gravitatieLuna);
-           
-            labelGreutateOmPeLuna.Text = $"Greutatea dv pe Luna este de {greutateOmPeLuna} kg";
-            return;          
-        }
+            catch (FormatException)
+            {
+                labelMesajEroareNecunoscuta.Text = "Date invalide.Nu introduceti litere sau simboluri.";
+            }           
+            double greutatePamant = ValidareDate();
+            float greutatePeLuna = (float)(greutatePamant * indiceGravitatie);
+            labelGreutatePeLuna.Text = $"Greutatea dv pe Luna va fi de {greutatePeLuna} kg.";          
+        }       
         private double ValidareDate()
         {
             double greutatePePamant = Convert.ToDouble(textBoxGreutatePePamant.Text);
@@ -40,13 +41,14 @@ namespace CalculatorGreutatePeLuna
             {
                 if (greutatePePamant < 45 || greutatePePamant > 90)
                 {
-                    labelAfisareMesajEroare.Text = " Date invalide. Greutatea este situata in intervalul 45 kg si 90 kg";
-                  
+                    labelAfisareMesajEroare.Text = "Greutatea admisa se situeaza in intervalul 45 kg si 90 kg si" +
+                        "nu putem avea o greutate mai mica sau egala cu 0.";                
                 }               
             }
             catch (FormatException)           
             {
-                labelAfisareMesajEroare.Text = "Nu puteti introduce litere sau simboluri.";
+                var labelAfisareMesajEroareNecunoscuta = labelMesajEroareNecunoscuta.Text;
+                labelMesajEroareNecunoscuta.Text = "Nu puteti introduce litere sau simboluri.";
             }
             return greutatePePamant;
         }
