@@ -41,7 +41,7 @@ namespace CalculatorGreutatePeLuna
             {
                 if (greutatePePamant < 45 || greutatePePamant > 90)
                 {
-                    labelAfisareMesajEroare.Text = "Greutatea admisa se situeaza in intervalul 45 kg si 90 kg si" +
+                    labelAfisareMesajEroare.Text = "Greutatea admisa se situeaza in intervalul 45 kg si 90 kg si " +
                         "nu putem avea o greutate mai mica sau egala cu 0.";                
                 }               
             }
